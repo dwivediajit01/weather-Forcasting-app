@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 import requests
 from django.http import JsonResponse 
 from .utils_conversion import *
-    
+from django.conf import settings
 
 # Create your views here.
 
@@ -36,7 +36,7 @@ def form(request):
     return render(request,'weather_app/form.html')
 
 def weather_data(request):
-    API_key='ce2f54623e14e468d3a2d18a0c746929'
+    API_key=settings.OPENWEATHER_API_KEY    # Enter your API key here
     lon=request.session.get('longitude')
     lat=request.session.get('latitude')
     city_name=request.session.get('city_name')
