@@ -1,0 +1,84 @@
+{% extends 'home.html' %}
+
+{% block main %}
+<div class="form-div">
+    <h1>Weather Information</h1>    
+    <form action="" method="post">
+        {% csrf_token %}
+        <span>
+        <label for="choice"> Daily Forecast
+            <input type="radio" name="choice" id="choice" value="daily_forcast" checked>
+        </label>
+        <label for="choice">5-Day Forecast
+            <input type="radio" name="choice" id="choice" value="5-day_forcast" checked>
+        </label>
+        </span>
+        
+        <!-- Dropdown to select form -->
+        <label for="form_select">Select Form</label>
+        <select id="form_select" name="form_select" onchange="showFormFields()">
+            <option value="">--Select--</option>
+            <option value="form_1">Enter Longitude and Latitude</option>
+            <option value="form_2">Enter City Name and Country Code</option>
+            <option value="form_3">Enter Place Name</option>
+        </select>
+        
+        <!-- Form 1: Longitude and Latitude -->
+        <div id="form_1" class="form-fields" style="display: none;">
+            <label for="longitude">Enter Longitude</label>
+            <input type="text" name="longitude" id="longitude" placeholder="Longitude" required>
+            <label for="latitude">Enter Latitude</label>
+            <input type="text" name="latitude" id="latitude" placeholder="Latitude" required>
+        </div>
+
+        <!-- Form 2: City Name and Country Code -->
+        <div id="form_2" class="form-fields" style="display: none;">
+            <label for="city_name">Enter City Name</label>
+            <input type="text" name="city_name" id="city_name" placeholder="City Name" required>
+            <label for="country_code">Enter Country Code</label>
+            <input type="text" name="country_code" id="country_code" placeholder="e.g. :- for India --> IN" required>
+        </div>
+
+        <!-- Form 3: Place Name -->
+        <div id="form_3" class="form-fields" style="display: none;">
+            <label for="place_name">Enter Place Name</label>
+            <input type="text" name="place_name" id="place_name" placeholder="City" required>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    function showFormFields() {
+        const formSelect = document.getElementById("form_select");
+        const selectedForm = formSelect.value;
+
+        // Hide and disable all form sections
+        const forms = document.querySelectorAll(".form-fields");
+        forms.forEach(form => {
+            form.style.display = "none";
+
+            // Disable all input fields inside this form
+            form.querySelectorAll("input").forEach(input => {
+                input.disabled = true;
+                input.removeAttribute("required");
+            });
+        });
+
+        // Show and enable the selected form
+        if (selectedForm) {
+            const activeForm = document.getElementById(selectedForm);
+            activeForm.style.display = "block";
+
+            // Enable inputs in the active form
+            activeForm.querySelectorAll("input").forEach(input => {
+                input.disabled = false;
+                input.setAttribute("required", "required");
+            });
+        }
+    }
+</script>
+
+
+{% endblock %}

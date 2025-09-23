@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'weather_app/home.css' %}">
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    {% block main %}
+    <div class="an"><a href="{% url 'form'%}">Check Another Forecast</a></div>
+    {% if flag == 'daily_forcast'%}
+    <div class="main-div">
+        <div class="weather-info">
+            <div class="weather-item">
+                <span>Longitude:</span> {{ weather.lon }}
+            </div>
+            <div class="weather-item">
+                <span>Latitude:</span> {{ weather.lat }}
+            </div>
+            <div class="weather-item">
+                <span>Weather:</span> {{ weather.weather }}
+            </div>
+            <div class="weather-item">
+                <span>Weather Details:</span> {{ weather.weather_description }}
+            </div>
+            <div class="weather-item">
+                <span>Temperature:</span> {{ weather.temp }}°C
+            </div>
+            <div class="weather-item">
+                <span>Feels Like:</span> {{ weather.feels_like }}°C
+            </div>
+            <div class="weather-item">
+                <span>Min Temperature:</span> {{ weather.temp_min }}°C
+            </div>
+            <div class="weather-item">
+                <span>Max Temperature:</span> {{ weather.temp_max }}°C
+            </div>
+            <div class="weather-item">
+                <span>Pressure:</span> {{ weather.pressure }} hPa
+            </div>
+            <div class="weather-item">
+                <span>Humidity:</span> {{ weather.humidity }}%
+            </div>
+            <div class="weather-item">
+                <span>Sea Level:</span> {{ weather.sea_level }} hPa
+            </div>
+            <div class="weather-item">
+                <span>Ground Level:</span> {{ weather.grnd_level }} hPa
+            </div>
+            <div class="weather-item">
+                <span>Visibility:</span> {{ weather.visibility }} meters
+            </div>
+            <div class="weather-item">
+                <span>Wind Speed:</span> {{ weather.wind_speed }} m/s
+            </div>
+            <div class="weather-item">
+                <span>Wind Direction:</span> {{ weather.wind_deg }}°
+            </div>
+            <div class="weather-item">
+                <span>Wind Gust:</span> {{ weather.wind_gust }} m/s
+            </div>
+            <div class="weather-item">
+                <span>Cloudiness:</span> {{ weather.clouds }}%
+            </div>
+            <div class="weather-item">
+                <span>Date & Time:</span> {{ weather.dt }}
+            </div>
+            <div class="weather-item">
+                <span>Country:</span> {{ weather.country }}
+            </div>
+            <div class="weather-item">
+                <span>Sunrise:</span> {{ weather.sunrise }}
+            </div>
+            <div class="weather-item">
+                <span>City Name:</span> {{ weather.city_name }}
+            </div>
+            <div class="weather-item">
+                <span>Timezone:</span> {{ weather.timezone }}
+            </div>
+        </div>
+    </div>
+    </div>
+    {% endif %}
+    
+    {% if flag == '5-day_forcast'%}
+    <div class="main-div">
+        {% for weather in weather %}
+        <div class="date-time">
+            <p class='date'>Date:{{ weather.date }}</p> 
+            <p class="time">Time:{{weather.time}}</p>
+        </div>
+        <div class="weather-info">
+            <div class="weather-item">
+                <span>Weather:</span> {{ weather.weather }}
+            </div>
+            <div class="weather-item">
+                <span>Weather Details:</span> {{ weather.weather_description }}
+            </div>
+            <div class="weather-item">
+                <span>Temperature:</span> {{ weather.temp }}°C
+            </div>
+            <div class="weather-item">
+                <span>Feels Like:</span> {{ weather.feels_like }}°C
+            </div>
+            <div class="weather-item">
+                <span>Min Temperature:</span> {{ weather.temp_min }}°C
+            </div>
+            <div class="weather-item">
+                <span>Max Temperature:</span> {{ weather.temp_max }}°C
+            </div>
+            <div class="weather-item">
+                <span>Pressure:</span> {{ weather.pressure }} hPa
+            </div>
+            <div class="weather-item">
+                <span>Humidity:</span> {{ weather.humidity }}%
+            </div>
+            <div class="weather-item">
+                <span>Sea Level:</span> {{ weather.sea_level }} hPa
+            </div>
+            <div class="weather-item">
+                <span>Ground Level:</span> {{ weather.grnd_level }} hPa
+            </div>
+            <div class="weather-item">
+                <span>Wind Speed:</span> {{ weather.wind_speed }} m/s
+            </div>
+            <div class="weather-item">
+                <span>Wind Direction:</span> {{ weather.wind_deg }}°
+            </div>
+            <div class="weather-item">
+                <span>Wind Gust:</span> {{ weather.wind_gust }} m/s
+            </div>
+            <div class="weather-item">
+                <span>Cloudiness:</span> {{ weather.clouds }}%
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    {% endif %}
+
+    {% endblock %}
+</body>
+</html>
+
