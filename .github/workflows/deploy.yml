@@ -1,3 +1,32 @@
+name: Deploy Django App
+
+# Trigger the workflow on push to the main branch
+on:
+  push:
+    branches:
+      - main  # Adjust if you use a different branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu environment
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python (adjust version as needed)
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Replace with your desired Python version
+
+      # Step 3: Install dependencies from requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Install dependencies listed in requirements.txt
+
       # Step 4: Set environment variables from GitHub Secrets (for API key)
       - name: Set environment variables from GitHub Secrets
         env:
@@ -6,3 +35,25 @@
           # Export the secret as an environment variable for the Django app
           echo "OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> $GITHUB_ENV
 
+      # Step 5: Run database migrations (to apply any pending migrations)
+      - name: Run migrations
+        run: |
+          python manage.py migrate  # Apply pending migrations
+
+      # Step 6: Collect static files for production
+      - name: Collect static files
+        run: |
+          python manage.py collectstatic --noinput  # Collect static files
+
+      # Step 7: Run the Django app (or deploy it, depending on your setup)
+      # If you're using production, you might use something like gunicorn or another service.
+      - name: Start Django app (for local testing)
+        run: |
+          python manage.py runserver 0.0.0.0:8000  # This is useful for local testing; replace it for production deployment
+
+      # Optional Step: Deploy the app to a hosting platform (like Heroku, AWS, etc.)
+      # Example for Heroku deployment (if applicable):
+      # - name: Deploy to Heroku
+      #   run: |
+      #     git remote add heroku https://git.heroku.com/your-app.git
+      #     git push heroku main
