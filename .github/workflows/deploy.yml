@@ -1,1 +1,8 @@
+      # Step 4: Set environment variables from GitHub Secrets (for API key)
+      - name: Set environment variables from GitHub Secrets
+        env:
+          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}  # Retrieve API key from GitHub Secrets
+        run: |
+          # Export the secret as an environment variable for the Django app
+          echo "OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> $GITHUB_ENV
 
